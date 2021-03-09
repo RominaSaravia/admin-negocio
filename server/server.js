@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 
 //Admin products, insertOne, getAllProducts
 const adminProducts = require("./adminProducts");
+const adminPedidos = require("./adminPedidos");
 
 const app = express();
 
@@ -35,15 +36,22 @@ app.get("/newProductForm", (req, res) => {
 
 //Get show form to create a new product
 app.get("/getListOfProducts", (req, res) => {
-  adminProducts.getAllProducts( data => {
+  adminProducts.getAllProducts(data => {
     res.render("showProducts", {
-      product:data
+      product: data
     });
-
   })
 })
 
+//Get show form to create a new product
+app.get("/presupuesto", (req, res) => {
 
+  adminProducts.getAllProducts(data => {
+    res.render("presupuesto", {
+      product: data
+    });
+  })
+})
 
 //Post a /newProduct, new product will be inserted into the DB
 app.post("/newProduct", (req, res) => {
@@ -60,8 +68,6 @@ app.post("/newProduct", (req, res) => {
       } else {
         console.log("Hubo un error");
         res.redirect("/");
-
-
       }
     }
   )
@@ -69,6 +75,34 @@ app.post("/newProduct", (req, res) => {
 
 })
 
+//Get
+app.get("/getListPresupuestos", (req, res) => {
+
+  adminPedidos.getAllPedidos(data => {
+    res.render("showPedidos", {
+      pedidos: data,
+    });
+
+  })
+})
+
+
+app.post("/newPedido", (req, res) => {
+  adminPedidos.insertNewPedido(
+    req.body.listProduct,
+    req.body.finalPrice,
+    cbResponse => {
+      if (cbResponse) {
+        console.log("Se logró registrar el producto");
+        res.redirect("/")
+      } else {
+        console.log("Hubo un error");
+        res.redirect("/");
+      }
+    }
+  )
+
+})
 
 
 app.listen(process.env.PORT || PORT, () => {

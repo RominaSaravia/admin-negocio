@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col cotizador-header">
+      <h2>Tu lista de pedidos</h2>
+    </div>
+  </div>
+
+</div>
+<div class="container">
+
+  {{#each pedidos}}
+
+  <div class="card border-info mb-3 " style="max-width: 18rem;">
+    <div class="card-header">#{{@index}} Pedido</div>
+    <div class="card-body">
+      <h5 class="card-title">Productos</h5>
+      {{#each this.list}}
+      <p class="card-text">{{this.name}}</p>
+      {{/each}}
+      <h5 class="card-text">Total a pagar: {{this.finalPrice}}</h5>
+    </div>
+  </div>
+
+  {{/each}}
+
+</div>

@@ -1,6 +1,6 @@
 const mongo = require("./const").mongo;
 
-const getAllProducts = (cbResponse) => {
+const getAllPedidos = (cbResponse) => {
   mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err,client)=>{
     if(err){
       console.log("ERROR - Trying to connect to Mongo");
@@ -8,7 +8,7 @@ const getAllProducts = (cbResponse) => {
       client.close();
     }else{
       const serverDB = client.db("adminProducts");
-      const productsCollection = serverDB.collection("products");
+      const productsCollection = serverDB.collection("pedidos");
 
       productsCollection.find({}).toArray( (err,data)=>{
         if(err){
@@ -25,29 +25,28 @@ const getAllProducts = (cbResponse) => {
   })
 }
 
-const insertNewProduct = (name,description,size,style,price, cbResponse) => {
-  mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err,client)=>{
-    if(err){
+
+const insertNewPedido = (list, finalPrice, cbResponse) => {
+  mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
+    if (err) {
       console.log("ERROR - Trying to connect to Mongo");
       cbResponse([]);
       client.close();
-    }else{
+    } else {
       const serverDB = client.db("adminProducts");
-      const productsCollection = serverDB.collection("products");
+      const productsCollection = serverDB.collection("pedidos");
 
-      const newProduct = {
-        name,
-        description,
-        size,
-        style,
-        price
+      const newPedido = {
+        list,
+        finalPrice,
+        state:"pendiente"
       }
 
-      productsCollection.insertOne(newProduct, (err,data)=>{
-        if(err){
+      productsCollection.insertOne(newPedido, (err, data) => {
+        if (err) {
           console.log("ERROR - Trying to insert new product");
           cbResponse(false);
-        }else{
+        } else {
           cbResponse(true);
         }
 
@@ -59,6 +58,6 @@ const insertNewProduct = (name,description,size,style,price, cbResponse) => {
 }
 
 module.exports = {
-  getAllProducts,
-  insertNewProduct
+  insertNewPedido,
+  getAllPedidos
 }

@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row">
+
+    <h3>Nuevo pedido</h3>
+    <div class="form-row selected-products ">
+      <div class="col-auto select-cotizador">
+        <label class="mr-sm-2" for="selectType">Producto seleccionado</label>
+        <select class="custom-select mr-sm-2" id="productSelect" name="{{this.name}}">
+          <option value="" selected>Producto...</option>
+          {{#each product}}
+          <option value="{{this.name}}" data-price={{this.price}}>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+
+    <div class="col-auto submit-btn">
+      <button onclick="addProduct()" type="button" class="btn btn-outline-info">Agregar</button>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <h4>Lista de productos:</h4>
+    <ul id="allProducts"></ul>
+  </div>
+
+  <div class="row">
+    <h4>Total a pagar:</h4>
+    <p id="totalPrice"></p>
+  </div>
+
+  <div class="col-auto submit-btn">
+    <button onclick="finish()" type="button" class="btn btn-outline-info">Finish</button>
+  </div>
+
+</div>
+
+
+<script>
+  const productSelected = document.getElementById("productSelect");
+  const productListed = document.getElementById("allProducts");
+  const totalPrice = document.getElementById("totalPrice");
+
+  let productprice;
+  let productname;
+  let listProduct = [];
+
+  productSelected.addEventListener("change", (e) => {
+    productname = e.target.options[e.target.selectedIndex].innerText
+    productprice = e.target.options[e.target.selectedIndex].dataset.price;
+
+  })
+
+  function addProduct() {
+    let product = {
+      name: productname,
+      price: productprice
+    }
+
+    listProduct.push(product)
+
+    newli = document.createElement("li");
+    newli.innerText = `${product.name} $${product.price}`;
+
+    productListed.appendChild(newli)
+
+    checkPrice()
+
+  }
+
+  function checkPrice() {
+    let totalToPay = 0;
+    for (e in listProduct) {
+      totalToPay += parseInt(listProduct[e].price);
+    }
+
+    totalPrice.textContent = totalToPay;
+
+    return totalToPay;
+
+  }
+
+  function finish() {
+    finalPrice = checkPrice();
+    console.log(finalPrice)
+    let pedidoListo = JSON.stringify(
+      {
+        listProduct,
+        finalPrice
+        });
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+      console.log(this.responseText);
+      if (this.status !== 200) {
+        console.log("ERROR");
+      } else {
+        console.log("200");
+      }
+
+      window.location.href = "/presupuesto";
+
+    }
+
+    xhr.open("POST", "/newPedido");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(pedidoListo);
+
+  }
+
+</script>
