@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col cotizador-header">
+    <div class="col product-header">
       <h2>Tu lista de pedidos</h2>
     </div>
   </div>
@@ -8,7 +8,7 @@
 </div>
 <div class="container">
 
-  {{#each pedidos}}
+  {{!-- {{#each pedidos}}
 
   <div class="card border-info mb-3 " style="max-width: 18rem;">
     <div class="card-header">#{{@index}} Pedido</div>
@@ -21,6 +21,44 @@
     </div>
   </div>
 
-  {{/each}}
+  {{/each}} --}}
+
+  <div class="row">
+    <div class="col-4">
+      <div class="list-group" id="list-tab" role="tablist">
+        {{#each pedidos}}
+        <a class="list-group-item list-group-item-action state-{{this.state}}" id="list-{{this.newId}}-list"
+          data-bs-toggle="list" href="#list-{{this.newId}}" role="tab" aria-controls="{{this.newId}}">#{{@index}}
+          Pedido: {{this.newId}}</a>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="tab-content" id="nav-tabContent">
+
+        {{#each pedidos}}
+        <div class="tab-pane fade" id="list-{{this.newId}}" role="tabpanel" aria-labelledby="list-{{this.newId}}-list">
+          {{#if this.state }}
+          <small class="state-{{this.state}}">{{this.state}}</small>
+          {{/if}}
+          <h4>Resumen de compra:</h4>
+          <h5>Productos:</h5>
+          {{#each this.list}}
+          <p>{{this.name}}</p>
+          {{/each}}
+          <h5>Total a pagar: ${{this.finalPrice}}</h5>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
 
 </div>
+
+<script>
+  var firstTabEl = document.querySelector('#myTab a:last-child')
+  var firstTab = new bootstrap.Tab(firstTabEl)
+
+  firstTab.show()
+</script>

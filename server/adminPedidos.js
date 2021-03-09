@@ -26,7 +26,7 @@ const getAllPedidos = (cbResponse) => {
 }
 
 
-const insertNewPedido = (list, finalPrice, cbResponse) => {
+const insertNewPedido = (list, finalPrice, newId, cbResponse) => {
   mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
     if (err) {
       console.log("ERROR - Trying to connect to Mongo");
@@ -37,6 +37,7 @@ const insertNewPedido = (list, finalPrice, cbResponse) => {
       const productsCollection = serverDB.collection("pedidos");
 
       const newPedido = {
+        newId,
         list,
         finalPrice,
         state:"pendiente"

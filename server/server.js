@@ -91,6 +91,7 @@ app.post("/newPedido", (req, res) => {
   adminPedidos.insertNewPedido(
     req.body.listProduct,
     req.body.finalPrice,
+    req.body.newId,
     cbResponse => {
       if (cbResponse) {
         console.log("Se logró registrar el producto");

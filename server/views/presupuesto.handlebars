@@ -1,10 +1,20 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
+    <div class="col product-header">
+      <h2>Generar nuevo pedido</h2>
+    </div>
+  </div>
 
-    <h3>Nuevo pedido</h3>
+</div>
+
+<div class="container-fluid new-product">
+  <div class="row mb-5">
+    <h3>Pedido</h3>
     <div class="form-row selected-products ">
-      <div class="col-auto select-cotizador">
-        <label class="mr-sm-2" for="selectType">Producto seleccionado</label>
+      <div class="col-auto select-product">
+
+        <label class="mr-sm-2" for="selectType">Seleccionar producto:</label>
+
         <select class="custom-select mr-sm-2" id="productSelect" name="{{this.name}}">
           <option value="" selected>Producto...</option>
           {{#each product}}
@@ -14,24 +24,24 @@
       </div>
     </div>
 
-    <div class="col-auto submit-btn">
-      <button onclick="addProduct()" type="button" class="btn btn-outline-info">Agregar</button>
+    <div class="col mt-1 submit-btn">
+      <button onclick="addProduct()" type="button" class="btn btn-secondary btn-md">Agregar al carrito</button>
     </div>
 
   </div>
 
-  <div class="row">
+  <div class="row mb-5">
     <h4>Lista de productos:</h4>
-    <ul id="allProducts"></ul>
+    <ul class="list-group" id="allProducts"></ul>
   </div>
 
-  <div class="row">
+  <div class="row mb-5">
     <h4>Total a pagar:</h4>
     <p id="totalPrice"></p>
   </div>
 
   <div class="col-auto submit-btn">
-    <button onclick="finish()" type="button" class="btn btn-outline-info">Finish</button>
+    <button onclick="finish()" type="button" class="btn btn-primary btn-md">Finalizar</button>
   </div>
 
 </div>
@@ -60,7 +70,8 @@
 
     listProduct.push(product)
 
-    newli = document.createElement("li");
+    let newli = document.createElement("li");
+    newli.classList.add("list-group-item");
     newli.innerText = `${product.name} $${product.price}`;
 
     productListed.appendChild(newli)
@@ -75,25 +86,27 @@
       totalToPay += parseInt(listProduct[e].price);
     }
 
-    totalPrice.textContent = totalToPay;
+    totalPrice.textContent = "$" + totalToPay;
 
     return totalToPay;
 
   }
 
+  const createId = () => Math.random().toString(36).split(".")[1];
+
   function finish() {
+    let newId = createId();
     finalPrice = checkPrice();
-    console.log(finalPrice)
     let pedidoListo = JSON.stringify(
       {
+        newId,
         listProduct,
         finalPrice
-        });
+      });
 
     const xhr = new XMLHttpRequest();
 
     xhr.onload = function () {
-      console.log(this.responseText);
       if (this.status !== 200) {
         console.log("ERROR");
       } else {

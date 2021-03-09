@@ -1,21 +1,28 @@
-.cotizador{
+.product-gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+
+.new-product{
   padding: 1.5rem;
   margin: auto;
   width: calc(100vw - 10%);
-  background-color: rgb(204, 216, 226);
+  background-color: rgb(213, 229, 241);
   justify-content: left;
 }
 
-.cotizador-header{
+.product-header{
   padding: 1rem 0;
   text-align: center;
 }
 
-.cotizador h3{
+.product h3{
   text-align: left;
 }
 
-.select-cotizador{
+.select-product{
   margin: auto;
   padding: 1rem 0;
 
@@ -24,4 +31,29 @@
 .submit-btn{
   margin-top: 3rem;
   text-align: left;
+}
+
+#allProducts{
+  padding-left: calc(var(--bs-gutter-x)/ 2);
+
+}
+
+a.state-pendiente{
+  background-color: rgb(255, 231, 231);
+}
+
+small.state-pendiente{
+  color: red;
+}
+
+a.state-ok{
+  background-color: rgb(203, 255, 229);
+}
+
+small.state-ok{
+  color: rgb(0, 201, 100);
+}
+
+a:active{
+  background-color: burlywood;
 }
