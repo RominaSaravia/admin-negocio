@@ -1,0 +1,77 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col cotizador-header">
+      <h2>Crea tu lista de productos</h2>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="container-fluid cotizador">
+  <form action="/newProduct" method="POST">
+
+    <h3>Nuevo producto</h3>
+
+
+    <div class="form-row">
+      <div class="col-4 input-cotizador">
+        <label for="tapas" class="form-label">Nombre</label>
+        <div class="input-group">
+          <input type="text" min="0" max="10000" step="any" class="form-control" name="name" id="name"
+            aria-describedby="materialPrice">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Descripcion del producto</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-auto select-cotizador">
+        <label class="mr-sm-2" for="selectType">Tamaño</label>
+        <select class="custom-select mr-sm-2" id="size" name="size">
+          <option selected>Estilo...</option>
+          <option value="A4">A4</option>
+          <option value="A5">A5</option>
+          <option value="A6v">A6</option>
+          <option value="A6h">A6 Apaisado</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-auto select-cotizador">
+        <label class="mr-sm-2" for="selectType">Estilo de cuaderno</label>
+        <select class="custom-select mr-sm-2" id="style" name="style">
+          <option selected>Estilo...</option>
+          <option value="Cosido">Cosido</option>
+          <option value="Anillado">Anillado</option>
+          <option value="Midori">Midori</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-4 input-cotizador">
+        <label for="forrado" class="form-label">Precio</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="number" min="0" max="10000" step="any" class="form-control" name="price" id="price"
+            aria-describedby="materialPrice">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto submit-btn">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+
+  </form>
+
+</div>

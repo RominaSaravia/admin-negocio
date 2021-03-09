@@ -1,0 +1,27 @@
+.cotizador{
+  padding: 1.5rem;
+  margin: auto;
+  width: calc(100vw - 10%);
+  background-color: rgb(204, 216, 226);
+  justify-content: left;
+}
+
+.cotizador-header{
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.cotizador h3{
+  text-align: left;
+}
+
+.select-cotizador{
+  margin: auto;
+  padding: 1rem 0;
+
+}
+
+.submit-btn{
+  margin-top: 3rem;
+  text-align: left;
+}
