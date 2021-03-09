@@ -54,6 +54,13 @@ small.state-ok{
   color: rgb(0, 201, 100);
 }
 
-a:active{
-  background-color: burlywood;
+.li-product{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.li-product>p{
+  margin: 0;
 }

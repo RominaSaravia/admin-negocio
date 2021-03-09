@@ -62,22 +62,17 @@
 
   })
 
-  function addProduct() {
-    let product = {
-      name: productname,
-      price: productprice
+  function showList() {
+    //Reset list
+    productListed.innerHTML = ""
+    //Generate de list of products
+    for (e in listProduct) {
+      let newli = document.createElement("li");
+      newli.classList.add("list-group-item", "li-product");
+      newli.innerHTML = `<p>${listProduct[e].name} $${listProduct[e].price}</p> <button id="btn-delete" onclick="deleteProduct(${e})" class="btn btn-danger btn-md">Eliminar</button>`;
+
+      productListed.appendChild(newli)
     }
-
-    listProduct.push(product)
-
-    let newli = document.createElement("li");
-    newli.classList.add("list-group-item");
-    newli.innerText = `${product.name} $${product.price}`;
-
-    productListed.appendChild(newli)
-
-    checkPrice()
-
   }
 
   function checkPrice() {
@@ -85,13 +80,39 @@
     for (e in listProduct) {
       totalToPay += parseInt(listProduct[e].price);
     }
-
     totalPrice.textContent = "$" + totalToPay;
-
     return totalToPay;
 
   }
 
+  function deleteProduct(e) {
+    console.log(listProduct)
+    let productRemoved = listProduct.splice(e, 1)
+    console.log(listProduct)
+
+    showList()
+    checkPrice()
+
+  }
+
+  function addProduct() {
+    if (productname && productprice) {
+      let product = {
+        name: productname,
+        price: productprice
+      }
+
+      listProduct.push(product)
+
+      showList()
+      checkPrice()
+
+    }
+
+  }
+
+
+  //Generate new Id
   const createId = () => Math.random().toString(36).split(".")[1];
 
   function finish() {
