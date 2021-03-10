@@ -8,28 +8,13 @@
 </div>
 <div class="container">
 
-  {{!-- {{#each pedidos}}
-
-  <div class="card border-info mb-3 " style="max-width: 18rem;">
-    <div class="card-header">#{{@index}} Pedido</div>
-    <div class="card-body">
-      <h5 class="card-title">Productos</h5>
-      {{#each this.list}}
-      <p class="card-text">{{this.name}}</p>
-      {{/each}}
-      <h5 class="card-text">Total a pagar: {{this.finalPrice}}</h5>
-    </div>
-  </div>
-
-  {{/each}} --}}
-
   <div class="row">
     <div class="col-4">
       <div class="list-group" id="list-tab" role="tablist">
         {{#each pedidos}}
-        <a class="list-group-item list-group-item-action state-{{this.state}}" id="list-{{this.newId}}-list"
-          data-bs-toggle="list" href="#list-{{this.newId}}" role="tab" aria-controls="{{this.newId}}">#{{@index}}
-          Pedido: {{this.newId}}</a>
+        <a class="list-group-item list-group-item-action state-{{this.state}}" id="list-{{this.id}}-list"
+          data-bs-toggle="list" href="#list-{{this.id}}" role="tab" aria-controls="{{this.id}}">#{{@index}}
+          Pedido: {{this.id}}</a>
         {{/each}}
       </div>
     </div>
@@ -37,20 +22,45 @@
       <div class="tab-content" id="nav-tabContent">
 
         {{#each pedidos}}
-        <div class="tab-pane fade" id="list-{{this.newId}}" role="tabpanel" aria-labelledby="list-{{this.newId}}-list">
+        <div class="tab-pane fade" id="list-{{this.id}}" role="tabpanel" aria-labelledby="list-{{this.id}}-list">
           {{#if this.state }}
-          <small class="state-{{this.state}}">{{this.state}}</small>
+          <span class="badge bg-info text-light state-{{this.state}}">{{this.state}}</span>
           {{/if}}
-          <h4>Resumen de compra:</h4>
+
+          <h4>Resumen de compra: <span> <a href="/getListPedidos/{{this.id}}">detalles</a></span> </h4>
+          <h5>Comprador: {{this.customer}}</h5>
+          <h5>Fecha de compra: {{this.dateTime}}</h5>
+
           <h5>Productos:</h5>
           {{#each this.list}}
           <p>{{this.name}}</p>
           {{/each}}
           <h5>Total a pagar: ${{this.finalPrice}}</h5>
+          <br />
+          <div class="row">
+            <div class="col-auto">
+              <form action="/updatePedido" method="POST">
+                <input type="text" name="id" id="id" value={{this.id}} hidden readonly>
+                <input type="text" name="newState" id="newState" value="pagado" hidden readonly>
+                <button type="submit" class="btn btn-success">Pagado</button>
+              </form>
+            </div>
+            <div class="col-auto">
+              <form action="/updatePedido" method="POST">
+                <input type="text" name="id" id="id" value={{this.id}} hidden readonly>
+                <input type="text" name="newState" id="newState" value="cancelado" hidden readonly>
+                <button type="submit" class="btn btn-danger">Cancelado</button>
+              </form>
+            </div>
+          </div>
         </div>
         {{/each}}
+
+        {{#if message}}{{message}}{{/if}}
+
       </div>
     </div>
+
   </div>
 
 

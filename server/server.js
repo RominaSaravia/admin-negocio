@@ -43,15 +43,17 @@ app.get("/getListOfProducts", (req, res) => {
   })
 })
 
-//Get show form to create a new product
-app.get("/presupuesto", (req, res) => {
+//Get show form to create a new pedido
+app.get("/pedidos", (req, res) => {
 
+  //Send all products available
   adminProducts.getAllProducts(data => {
-    res.render("presupuesto", {
+    res.render("newPedido", {
       product: data
     });
   })
 })
+
 
 //Post a /newProduct, new product will be inserted into the DB
 app.post("/newProduct", (req, res) => {
@@ -76,7 +78,7 @@ app.post("/newProduct", (req, res) => {
 })
 
 //Get
-app.get("/getListPresupuestos", (req, res) => {
+app.get("/getListPedidos", (req, res) => {
 
   adminPedidos.getAllPedidos(data => {
     res.render("showPedidos", {
@@ -86,12 +88,31 @@ app.get("/getListPresupuestos", (req, res) => {
   })
 })
 
+//Get show pedidoDetails
+app.get("/getListPedidos/:id", (req, res) => {
+  if(req.params.id){
+    adminPedidos.getOnePedido(req.params.id, cbResponse => {
+      if(cbResponse){
+        res.render("pedidoDetails", {
+          pedido: cbResponse
+        })
+        console.log(cbResponse);
+      }else{
+        res.render("pedidoDetails", {
+          message:"Lo siento, no se encontró el pedido."
+        })
+      }
+    })
+  }
+})
 
 app.post("/newPedido", (req, res) => {
   adminPedidos.insertNewPedido(
     req.body.listProduct,
     req.body.finalPrice,
     req.body.newId,
+    req.body.customer,
+    req.body.dateTime,
     cbResponse => {
       if (cbResponse) {
         console.log("Se logró registrar el producto");
@@ -102,7 +123,20 @@ app.post("/newPedido", (req, res) => {
       }
     }
   )
+})
 
+app.post("/updatePedido", (req, res) => {
+  if (req.body.newState && req.body.id) {
+    adminPedidos.updateOne(req.body.id, req.body.newState, cbResponse => {
+      if (cbResponse) {
+        res.redirect("/getListPedidos");
+      } else {
+        res.render("/getListPedidos", {
+          message: "Hubo un error, intente nuevamente"
+        });
+      }
+    })
+  }
 })
 
 

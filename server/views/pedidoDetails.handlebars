@@ -1,0 +1,72 @@
+{{#if message}}
+<div class="container">
+  <div class="row mt-4 mb-4 justify-content-md-center">
+    <div class="col-auto">
+      <h3>{{message}}</h3>
+    </div>
+  </div>
+</div>
+
+{{else}}
+
+<div class="container pedido-details">
+
+  <div class="row mt-4 details-header justify-content-md-center">
+    <div class="col-6">
+      <h4>Pedido ID: {{pedido.id}}</h4>
+    </div>
+    <div class="col-6">
+      <h4>Fecha: {{pedido.dateTime}}</h4>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+      <h4>Estado: </h4>
+    </div>
+    <div class="col-6">
+      <h4>{{pedido.state}}</h4>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-6">
+      <h4>Comprador: </h4>
+    </div>
+    <div class="col-6">
+      <h4>{{pedido.customer}}</h4>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row justify-content-md-center">
+
+    <h4>Lista de productos:</h4>
+    {{#each pedido.list}}
+    <div class="col-6">
+      <p>{{this.name}}</p>
+    </div>
+    <div class="col-6">
+      <p>$ {{this.price}}</p>
+    </div>
+    {{/each}}
+
+  </div>
+
+  <div class="row mt-3 details-footer justify-content-md-center">
+    <div class="col-6">
+      <h4>Total: </h4>
+    </div>
+    <div class="col-6">
+      <h4>$ {{pedido.finalPrice}}</h4>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5 justify-content-md-center">
+  <div class="col-auto">
+    <button class="btn btn-primary" onclick="window.print()"> Imprimir </button>
+  </div>
+</div>
+
+{{/if}}
