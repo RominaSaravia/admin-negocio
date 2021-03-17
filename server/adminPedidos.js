@@ -69,7 +69,8 @@ const insertNewPedido = (list, finalPrice, id, customer, dateTime, cbResponse) =
         list,
         finalPrice,
         dateTime,
-        state: "pendiente"
+        state: "pendiente",
+        terminated:false
       }
 
       productsCollection.insertOne(newPedido, (err, data) => {
@@ -100,7 +101,7 @@ const updateOne = (id, newState, cbResponse) => {
       const productsCollection = serverDB.collection("pedidos");
 
       let findQuery = { id };
-      let updateQuery = { $set: { state: newState } }
+      let updateQuery = { $set: { state: newState, terminated: true } }
 
       productsCollection.updateOne(findQuery, updateQuery, (err, data) => {
         if (err) {

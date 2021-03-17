@@ -72,3 +72,15 @@ span.state-pagado {
 .pedido-details{
   max-width: 48rem;
 }
+
+.list-group-item{
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.5rem;
+}
+.list-group-item>p {
+  margin: 0;
+  padding: 0.2rem;
+
+}

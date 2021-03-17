@@ -1,6 +1,6 @@
 # Control de productos, registro de pedidos
 
-Proyecto subi a Heroku
+Proyecto subido a Heroku
 [LIVE DEMO](https://admin-negocio.herokuapp.com/)
 
 Funcionalidades:

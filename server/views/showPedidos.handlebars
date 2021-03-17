@@ -27,7 +27,7 @@
           <span class="badge bg-info text-light state-{{this.state}}">{{this.state}}</span>
           {{/if}}
 
-          <h4>Resumen de compra: <span> <a href="/getListPedidos/{{this.id}}">detalles</a></span> </h4>
+          <h4>Resumen de compra: <span> <a href="/pedidos/list/{{this.id}}">detalles</a></span> </h4>
           <h5>Comprador: {{this.customer}}</h5>
           <h5>Fecha de compra: {{this.dateTime}}</h5>
 
@@ -37,22 +37,28 @@
           {{/each}}
           <h5>Total a pagar: ${{this.finalPrice}}</h5>
           <br />
+          {{#if this.terminated}}
+          <p>Transacción finalizada</p>
+
+          {{else}}
           <div class="row">
             <div class="col-auto">
-              <form action="/updatePedido" method="POST">
+              <form action="/pedidos/update" method="POST">
                 <input type="text" name="id" id="id" value={{this.id}} hidden readonly>
                 <input type="text" name="newState" id="newState" value="pagado" hidden readonly>
                 <button type="submit" class="btn btn-success">Pagado</button>
               </form>
             </div>
             <div class="col-auto">
-              <form action="/updatePedido" method="POST">
+              <form action="/pedidos/update" method="POST">
                 <input type="text" name="id" id="id" value={{this.id}} hidden readonly>
                 <input type="text" name="newState" id="newState" value="cancelado" hidden readonly>
                 <button type="submit" class="btn btn-danger">Cancelado</button>
               </form>
             </div>
           </div>
+
+          {{/if}}
         </div>
         {{/each}}
 
