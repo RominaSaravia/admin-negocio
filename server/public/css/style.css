@@ -25,6 +25,13 @@
 
 }
 
+.card-footer-flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
 #allProducts{
   padding-left: calc(var(--bs-gutter-x)/ 2);
 
