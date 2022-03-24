@@ -1,57 +1,7 @@
-const mongo = require("./const").mongo;
+const mongo = require("../const").mongo;
 
-const getAll = (cbResponse) => {
-  mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
-    if (err) {
-      console.log("ERROR - Trying to connect to Mongo");
-      cbResponse([]);
-      client.close();
-    } else {
 
-      const serverDB = client.db("adminProducts");
-      const productsCollection = serverDB.collection("pedidos");
-
-      productsCollection.find({}).toArray((err, data) => {
-        if (err) {
-          console.log("ERROR - Trying to get all products");
-          cbResponse([]);
-        } else {
-          cbResponse(data);
-        }
-
-        client.close();
-      })
-    }
-  })
-}
-
-const getOnePedido = (id, cbResponse) => {
-  mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
-    if (err) {
-      console.log("ERROR - Trying to connect to Mongo");
-      cbResponse([]);
-      client.close();
-    } else {
-
-      const serverDB = client.db("adminProducts");
-      const productsCollection = serverDB.collection("pedidos");
-
-      productsCollection.findOne( { id: id }, (err, data) => {
-        if (err) {
-          console.log("ERROR - Trying to get one pedido");
-          cbResponse(undefined);
-        } else {
-          cbResponse(data);
-        }
-
-        client.close();
-      })
-    }
-  })
-
-}
-
-const insertNewPedido = (list, finalPrice, id, customer, dateTime, cbResponse) => {
+exports.create = (list, finalPrice, id, customer, dateTime, cbResponse) => {
   mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
     if (err) {
       console.log("ERROR - Trying to connect to Mongo");
@@ -85,10 +35,59 @@ const insertNewPedido = (list, finalPrice, id, customer, dateTime, cbResponse) =
       })
     }
   })
-
 }
 
-const updateOne = (id, newState, cbResponse) => {
+exports.getAll = (cbResponse) => {
+  mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
+    if (err) {
+      console.log("ERROR - Trying to connect to Mongo");
+      cbResponse([]);
+      client.close();
+    } else {
+
+      const serverDB = client.db("adminProducts");
+      const productsCollection = serverDB.collection("pedidos");
+
+      productsCollection.find({}).toArray((err, data) => {
+        if (err) {
+          console.log("ERROR - Trying to get all products");
+          cbResponse([]);
+        } else {
+          cbResponse(data);
+        }
+
+        client.close();
+      })
+    }
+  })
+}
+
+exports.getOne = (id, cbResponse) => {
+  mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
+    if (err) {
+      console.log("ERROR - Trying to connect to Mongo");
+      cbResponse([]);
+      client.close();
+    } else {
+
+      const serverDB = client.db("adminProducts");
+      const productsCollection = serverDB.collection("pedidos");
+
+      productsCollection.findOne( { id: id }, (err, data) => {
+        if (err) {
+          console.log("ERROR - Trying to get one pedido");
+          cbResponse(undefined);
+        } else {
+          cbResponse(data);
+        }
+
+        client.close();
+      })
+    }
+  })
+}
+
+exports.updateOne = (id,newState,cbResponse) => {
   mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
     if (err) {
       console.log("ERROR - Trying to connect to Mongo");
@@ -115,12 +114,4 @@ const updateOne = (id, newState, cbResponse) => {
       });
     }
   })
-
-}
-
-module.exports = {
-  getAll,
-  getOnePedido,
-  insertNewPedido,
-  updateOne
 }

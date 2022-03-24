@@ -1,79 +1,21 @@
 const express = require("express")
-const adminPedidos = require("../adminPedidos");
-const repository = require("../repositories/products");
+const controller = require("../controller/pedidosController")
 
 const pedidosRouter = express.Router()
 
 //Get show form to create a new pedido
-pedidosRouter.get("/newForm", (req, res) => {
-
-  //Send all products available
-  repository.getAll(data => {
-    res.render("newPedido", {
-      product: data
-    });
-  })
-})
+pedidosRouter.get("/newForm", controller.getFormProducts);
 
 //Get show list of pedidos
-pedidosRouter.get("/list", (req, res) => {
-
-  adminPedidos.getAll(data => {
-    res.render("showPedidos", {
-      pedidos: data,
-    });
-
-  })
-})
+pedidosRouter.get("/", controller.getAll);
 
 //Get show pedidoDetails
-pedidosRouter.get("/list/:id", (req, res) => {
-  if(req.params.id){
-    adminPedidos.getOnePedido(req.params.id, cbResponse => {
-      if(cbResponse){
-        res.render("pedidoDetails", {
-          pedido: cbResponse
-        })
-        console.log(cbResponse);
-      }else{
-        res.render("pedidoDetails", {
-          message:"Lo siento, no se encontró el pedido."
-        })
-      }
-    })
-  }
-})
+pedidosRouter.get("/:id", controller.getOne );
 
 // POST create new pedido
-pedidosRouter.post("/new", (req, res) => {
-  adminPedidos.insertNewPedido(
-    req.body.listProduct,
-    req.body.finalPrice,
-    req.body.newId,
-    req.body.customer,
-    req.body.dateTime,
-    cbResponse => {
-      if (cbResponse) {
-        res.redirect("/")
-      } else {
-        res.redirect("/");
-      }
-    }
-  )
-})
+pedidosRouter.post("/", controller.create);
 
-pedidosRouter.post("/update", (req, res) => {
-  if (req.body.newState && req.body.id) {
-    adminPedidos.updateOne(req.body.id, req.body.newState, cbResponse => {
-      if (cbResponse) {
-        res.redirect("/pedidos/list");
-      } else {
-        res.render("/pedidos/list", {
-          message: "Hubo un error, intente nuevamente"
-        });
-      }
-    })
-  }
-})
+//PUT
+pedidosRouter.put("/", controller.updateOne);
 
 module.exports = pedidosRouter;

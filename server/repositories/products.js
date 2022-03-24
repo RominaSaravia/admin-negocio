@@ -1,5 +1,3 @@
-const { type } = require("express/lib/response");
-
 const mongo = require("../const").mongo;
 
 exports.getAll = (cbResponse) => {

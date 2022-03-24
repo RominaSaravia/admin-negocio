@@ -20,6 +20,12 @@ exports.create = async (req,res) =>{
 
 
 }
+
+exports.getForm = async (req,res)=>{
+  res.render("newProduct");
+
+}
+
 exports.getAll = async (req,res) =>{
   repository.getAll(data => {
     res.render("showProducts", {

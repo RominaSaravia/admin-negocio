@@ -1,16 +1,12 @@
 const express = require("express");
 const productsRouter = express.Router();
-
-const adminProducts = require("../adminProducts");
 const controller = require("../controller/productController");
 
 //Get show form to create a new product
-productsRouter.get("/newForm", (req, res) => {
-  res.render("newProduct");
-})
+productsRouter.get("/newForm", controller.getForm);
 
 //Get show form to create a new product
-productsRouter.get("/list", controller.getAll );
+productsRouter.get("/", controller.getAll );
 
 productsRouter.get("/:id", controller.getOne );
 

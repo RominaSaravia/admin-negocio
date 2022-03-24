@@ -27,7 +27,7 @@
           <span class="badge bg-info text-light state-{{this.state}}">{{this.state}}</span>
           {{/if}}
 
-          <h4>Resumen de compra: <span> <a href="/pedidos/list/{{this.id}}">detalles</a></span> </h4>
+          <h4>Resumen de compra: <span> <a href="/pedidos/{{this.id}}">detalles</a></span> </h4>
           <h5>Comprador: {{this.customer}}</h5>
           <h5>Fecha de compra: {{this.dateTime}}</h5>
 
@@ -43,14 +43,14 @@
           {{else}}
           <div class="row">
             <div class="col-auto">
-              <form action="/pedidos/update" method="POST">
+              <form action="/pedidos/" method="PUT">
                 <input type="text" name="id" id="id" value={{this.id}} hidden readonly>
                 <input type="text" name="newState" id="newState" value="pagado" hidden readonly>
                 <button type="submit" class="btn btn-success">Pagado</button>
               </form>
             </div>
             <div class="col-auto">
-              <form action="/pedidos/update" method="POST">
+              <form action="/pedidos/" method="PUT">
                 <input type="text" name="id" id="id" value={{this.id}} hidden readonly>
                 <input type="text" name="newState" id="newState" value="cancelado" hidden readonly>
                 <button type="submit" class="btn btn-danger">Cancelado</button>

@@ -84,6 +84,11 @@ span.state-pagado {
   padding: 0.2rem;
 
 }
+
+.btn-delete{
+  padding: 0.4rem;
+  font-size: 0.9rem;
+}
 .message {
   padding: 0.2rem;
   font-size: 1.2rem;
