@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col product-header">
       <h2>Tu lista de productos</h2>
+      <p id="result" class="message" >{{this.result}}</p>
     </div>
   </div>
 
@@ -20,12 +21,43 @@
         <p class="card-text">{{this.style}}</p>
         <p class="card-text">{{this.description}}</p>
       </div>
-      <div class="card-footer bg-transparent border-success">${{this.price}}</div>
+      <div class="card-footer bg-transparent border-success">
+        ${{this.price}}
+        <button onclick="deleteProduct(`{{this._id}}`)" class="btn btn-danger" >Delete</button>
+        </div>
     </div>
   </div>
   {{/each}}
 
   </div>
 
-
 </div>
+
+<script>
+  function deleteProduct(ids){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = function(){
+      if(this.status !== 200){
+          const resultP = document.getElementById("result");
+          resultP.textContent = "Sorry, try later";
+      }else{
+          const resultP = document.getElementById("result");
+          resultP.textContent = "Success";
+
+
+        setTimeout( ()=> {
+
+            window.location.href = "/";
+
+          },1500);
+      }
+
+    }
+
+      xhr.open("DELETE", "/products/" + ids);
+      xhr.send();
+  }
+
+
+</script>

@@ -1,7 +1,8 @@
 const express = require("express");
-const adminProducts = require("../adminProducts");
-
 const productsRouter = express.Router();
+
+const adminProducts = require("../adminProducts");
+const controller = require("../controller/productController");
 
 //Get show form to create a new product
 productsRouter.get("/newForm", (req, res) => {
@@ -9,33 +10,14 @@ productsRouter.get("/newForm", (req, res) => {
 })
 
 //Get show form to create a new product
-productsRouter.get("/list", (req, res) => {
-  adminProducts.getAllProducts(data => {
-    res.render("showProducts", {
-      product: data
-    });
-  })
-})
+productsRouter.get("/list", controller.getAll );
+
+productsRouter.get("/:id", controller.getOne );
 
 //Post a /newProduct, new product will be inserted into the DB
-productsRouter.post("/new", (req, res) => {
-  adminProducts.insertNewProduct(
-    req.body.name,
-    req.body.description,
-    req.body.size,
-    req.body.style,
-    req.body.price,
-    cbResponse => {
-      if (cbResponse) {
-        console.log("Se logró registrar el producto");
-        res.redirect("/")
-      } else {
-        console.log("Hubo un error");
-        res.redirect("/");
-      }
-    }
-  )
+productsRouter.post("/", controller.create );
 
-})
+//Delete
+productsRouter.delete("/:id", controller.delete );
 
 module.exports = productsRouter;

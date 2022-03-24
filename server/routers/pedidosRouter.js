@@ -1,6 +1,6 @@
 const express = require("express")
 const adminPedidos = require("../adminPedidos");
-const adminProducts = require("../adminProducts");
+const repository = require("../repositories/products");
 
 const pedidosRouter = express.Router()
 
@@ -8,7 +8,7 @@ const pedidosRouter = express.Router()
 pedidosRouter.get("/newForm", (req, res) => {
 
   //Send all products available
-  adminProducts.getAllProducts(data => {
+  repository.getAll(data => {
     res.render("newPedido", {
       product: data
     });
@@ -18,7 +18,7 @@ pedidosRouter.get("/newForm", (req, res) => {
 //Get show list of pedidos
 pedidosRouter.get("/list", (req, res) => {
 
-  adminPedidos.getAllPedidos(data => {
+  adminPedidos.getAll(data => {
     res.render("showPedidos", {
       pedidos: data,
     });
@@ -54,10 +54,8 @@ pedidosRouter.post("/new", (req, res) => {
     req.body.dateTime,
     cbResponse => {
       if (cbResponse) {
-        console.log("Se logró registrar el producto");
         res.redirect("/")
       } else {
-        console.log("Hubo un error");
         res.redirect("/");
       }
     }

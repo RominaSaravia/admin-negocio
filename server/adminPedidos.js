@@ -1,6 +1,6 @@
 const mongo = require("./const").mongo;
 
-const getAllPedidos = (cbResponse) => {
+const getAll = (cbResponse) => {
   mongo.db.MongoClient.connect(mongo.dbURL, mongo.mongoConfig, (err, client) => {
     if (err) {
       console.log("ERROR - Trying to connect to Mongo");
@@ -119,7 +119,7 @@ const updateOne = (id, newState, cbResponse) => {
 }
 
 module.exports = {
-  getAllPedidos,
+  getAll,
   getOnePedido,
   insertNewPedido,
   updateOne
